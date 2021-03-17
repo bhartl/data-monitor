@@ -72,7 +72,14 @@ class DataMonitor(object):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+
         if self._show_process is not None:
+            if exc_type is not None:
+                try:
+                    self._show_process.terminate()
+                except:
+                    pass
+
             self._show_process.join()
             self._show_process = None
 
