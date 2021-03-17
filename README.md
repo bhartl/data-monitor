@@ -1,4 +1,4 @@
-# A matplotlib `data_monitor`
+# WIP: A matplotlib `data_monitor`
 Data Monitoring of externally manipulated data (such as sensory-data or file-data)
 - non-blocking (based on multiprocessing)
 - multiple channels in real-time 
