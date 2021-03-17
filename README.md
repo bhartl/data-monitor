@@ -13,10 +13,18 @@ The data-monitor runs matplotlib in an extra `multiprocessing.Process`.
 For a clean subprocess handling it is recommended to use DataMonitor in the with environment:
 
 ```python
-with DataMonitor(channels=..., ...) as dm:
+from data_monitor import DataMonitor
+
+def get_data():
+    # get data in format (x, *y) from elsewhere
+    ...
+    return data
+
+with DataMonitor() as dm:
      while True:
-         dm.data = <update data from external source>
-         <do something else>
+         dm.data = get_data()
+         
+         # do something else
 ```
 
 For custom configuration consider overwriting the `DataMonitor.plot` method.

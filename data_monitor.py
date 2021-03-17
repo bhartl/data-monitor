@@ -69,19 +69,22 @@ class DataMonitor(object):
 
     def __enter__(self):
         self.start()
-
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        del self
-
-    def __del__(self):
-        if self._data_queue is not None:
-            self._data_queue.close()
-
         if self._show_process is not None:
-            self._show_process.terminate()
             self._show_process.join()
+            self._show_process = None
+
+        if self._data_queue is not None:
+            while not self._data_queue.empty():
+                try:
+                    self._data_queue.get(timeout=0.001)
+                except (TimeoutError, Empty):
+                    pass
+
+            self._data_queue.close()
+            self._data_queue = None
 
     def start(self):
         """ Starts the matplotlib FuncAnimation as subprocess (non-blocking, queue communication) """
@@ -188,13 +191,15 @@ if __name__ == '__main__':
     ]
 
     plt_kwargs = dict(
-        xlim=((0, 200), {}),
+        xlim=((0, 50), {}),
         ylim=((-2.5, 2.5), {}),
         xlabel=(('steps', ), {}),
         ylabel=(('values',), {}),
     )
 
     with DataMonitor(data=data, channels=channels, plt_kwargs=plt_kwargs, update_rate=1) as dm:
-        for i in range(200):
+        for i in range(50):
             dm.data = get_data_from_elsewhere()
             time.sleep(0.05)
+
+    print('done')
