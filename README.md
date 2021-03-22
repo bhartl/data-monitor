@@ -6,7 +6,9 @@ Data Monitoring of externally manipulated data (such as sensory-data or file-dat
 
 Example code how is provided in the `data_monitor.py` and can be executed in the command line via
 ```bash
-python data_monitor.py
+python examples data-monitor
+python examples nonblocking-plot
+python examples custom-axes-monitor
 ```
 
 The data-monitor runs matplotlib in an extra `multiprocessing.Process`.
@@ -27,4 +29,9 @@ with DataMonitor() as dm:
          # do something else
 ```
 
-For custom configuration consider overwriting the `DataMonitor.plot` method.
+For custom configuration consider passing
+(i) `make_fig` and
+(ii) `ax_plot`
+callables to the DataMonitor during construction to
+(i) generate a custom (fig, axes) matplotlib environment and to
+(ii) specify, how the data is plotted.
