@@ -4,7 +4,7 @@ Data Monitoring of externally manipulated data (such as sensory-data or file-dat
 - multiple channels in real-time 
 - based on `matplotlib` and `FuncAnimation` in `matplotlib.animation`.
 
-Example code how is provided in the `data_monitor.py` and can be executed in the command line via
+Example code how is provided in the `examples.py` module and can be executed in the command line via
 ```bash
 python examples data-monitor
 python examples nonblocking-plot
